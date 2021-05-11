@@ -1,0 +1,36 @@
+Part 1:
+
+	I chose to implement the following models for this task:
+		1. (Product) Category - this table would hold records for the various categories of products described
+           (Birth Control, Emergency Contraception, etc). Each record in the Product table would belong_to
+           one of these categories. The thinking being this will make it easy to present a filtered list by
+           category to the Patient depending on what they need.
+        2. Product - represents any product offered by the service. belongs_to a Category.
+        3. State - holds records on each geographic state, the minimum age in that state, and whether our services
+           are offered there. Each Patient belongs_to a State, which will make it simple to filter our Patients
+           by State in case we need to provide important information pertaining to their services in that region.
+        3. Patient - stores personal data about the patient provided at signup. belongs_to a State.
+        4. Prescription - ties together a Patient and a Product through a belongs_to relationship to each. 
+
+
+Part 2 Follow-Up Questions:
+
+	1. I think it would be prudent to implement some kind of authentication mechanism at the remote URL (e.g. OAuth).
+	   As it is, this endpoint is completely open to the whole world.
+	2. In the case that the remote URL is temporarily unavailable, I could add the new patient to a queue
+	   in a background job processing service (e.g. Sidekiq). The job to assign the patient to a doctor
+	   can be re-attempted several times until we receive a success.
+	3. The specs would stub the requests to the external API with cases for each potential response
+	   (success, failure, internal server error, service unavailable). In the case where the URL is
+	   unavailable, the spec would ensure that the doctor assignment job is successfully added to the
+	   background processing queue.
+
+Part 3:
+
+	Some questions that come to mind are:
+		1. What will happen to patients in that state who currently have prescriptions for that product?
+		2. How will we securely/confidentially notify these patients of this change?
+	To model this change, I would add a text_field to the Product model representing an array of States
+	where the Product is available (or unavailable) and in the Product model, serialize this field as an
+	array. When presenting a list of products to a new Patient in that State, it would be filtered by
+	products that are available in their state based on this new field.
