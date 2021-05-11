@@ -71,3 +71,5 @@ PRODUCTS = [
   { name: 'Prenatal Vitamins', category: 'OTC Products', ndc: '00000-00-005', qty: 1, price: 29, instructions: 'Lorem ipsum' },
   { name: 'Ibuprofen', category: 'OTC Products', ndc: '00000-00-006', qty: 60, price: 45, instructions: 'Lorem ipsum' }
 ].freeze
+
+DOCTOR_API_ENDPOINT = 'https://challenge-28h.herokuapp.com/doctors/assign'
