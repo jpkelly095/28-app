@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_10_225851) do
+ActiveRecord::Schema.define(version: 2021_05_11_222403) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2021_05_10_225851) do
     t.date "birthdate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "doctor_name"
+    t.string "doctor_token"
     t.index ["state_id"], name: "index_patients_on_state_id"
   end
 
