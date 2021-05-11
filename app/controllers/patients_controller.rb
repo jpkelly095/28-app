@@ -39,4 +39,5 @@ class PatientsController < ApplicationController
       doctor_name: response.dig('details', 'doctor'),
       doctor_token: response.dig('details', 'token')
     )
+  end
 end
