@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
+  before_action :validate_state, only: :create
   after_action :assign_doctor, only: :create
 
   def new
@@ -13,7 +14,7 @@ class PatientsController < ApplicationController
       flash[:success] = 'You have successfully signed up!'
       redirect_to root_path
     else
-      flash[:error] = 'We were unable to create your patient profile.'
+      flash[:danger] = 'We were unable to create your patient profile.'
       redirect_to root_path
     end
   end
@@ -39,5 +40,13 @@ class PatientsController < ApplicationController
       doctor_name: response.dig('details', 'doctor'),
       doctor_token: response.dig('details', 'token')
     )
+  end
+
+  def validate_state
+    state = State.find(patient_params[:state_id])
+    return if state.service_offered
+
+    flash[:danger] = 'We\'re sorry, but our services are not available in your state at this time'
+    redirect_to root_path
   end
 end
