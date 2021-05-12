@@ -12,6 +12,8 @@ Part 1:
         3. Patient - stores personal data about the patient provided at signup. belongs_to a State.
         4. Prescription - ties together a Patient and a Product through a belongs_to relationship to each. 
 
+    Unfortunately I was not able to get the state validation working with coffeescript. I did implement it as a
+    before_action using the validate_state method in the PatientsController. 
 
 Part 2 Follow-Up Questions:
 
